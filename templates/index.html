@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Application</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}"> 
+    <!-- linking stylesheet using jinja 2 template engine syntax -->
+
+</head>
+<body>
+    <h1>To do List</h1>
+    <form action="/add" method = "POST">
+        <!-- when add button is clicked/submitted "/add" is activated -->
+        <input type="text" name="title" placeholder="Enter to-do">
+        <button type="submit"> Add </button> 
+    </form>
+   
+    {% for item in todo_display %}
+        <!-- displaying items -->
+        <p>{{ item.id }}) {{ item.title }}</p>
+        <!-- displaying completed/not completed based on status -->
+        {% if item.status == False %}
+            Not Completed 
+        {% else %} 
+            Completed 
+        {% endif %}
+
+        <!-- "/update/{{ item.id }}" AND "/delete/{{ item.id }}" URLs/hyperlinks are like defined here -->
+        <!-- when update/delete hyperlink is clicked "/update/{{ item.id }}" OR "/delete/{{ item.id }}" is activated -->
+        <a href="/update/{{ item.id }}">Update</a>
+        <a href="/delete/{{ item.id }}">Delete</a>
+        
+    {% endfor %}
+</body>
+</html>
